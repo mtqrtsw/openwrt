@@ -1,0 +1,31 @@
+/dts-v1/;
+#include <dt-bindings/interrupt-controller/arm-gic.h> /* SoC not yet to be supported on mainline, using generic */
+
+/ {
+    model = "ZTE ZXHN F671Y basic test";
+    compatible = "zte,zx279128s", "arm,cortex-a9";
+
+    #address-cells = <1>;
+    #size-cells = <1>;
+
+    memory@40000000 {
+        device_type = "memory";
+        reg = <0x40000000 0x10000000>; /* 256MB DRAM */
+    };
+
+    soc {
+        #address-cells = <1>;
+        #size-cells = <1>;
+        compatible = "simple-bus";
+        ranges;
+
+        /* Standard UART support is present on mainline */
+        serial@94404000 {
+            compatible = "arm,pl011", "arm,primecell";
+            reg = <0x94404000 0x1000>;
+            interrupts = <GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>;
+            clocks = <&uart_clk>;
+            clock-names = "apb_pclk";
+        };
+    };
+};
